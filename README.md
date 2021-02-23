@@ -18,4 +18,3 @@ open `package.json` and change Line 4
 Change: "homepage": "http://ademidun.github.io/ledn-interview", To your username: "homepage": "http://{your_uername}.github.io/ledn-interview",
 
 `npm run deploy`
-

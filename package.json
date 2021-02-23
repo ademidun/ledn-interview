@@ -1,7 +1,7 @@
 {
   "name": "ledn-interview",
   "version": "0.1.0",
-  "homepage": "https://ademidun.github.io/ledn-interview",
+  "homepage": "http://ademidun.github.io/ledn-interview",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.11.9",
@@ -41,5 +41,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "gh-pages": "^3.1.0"
   }
 }
