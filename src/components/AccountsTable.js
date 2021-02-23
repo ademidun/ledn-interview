@@ -3,6 +3,7 @@ import { Table, Input, Button, Space } from "antd";
 import Highlighter from 'react-highlight-words';
 import { SearchOutlined } from '@ant-design/icons';
 import { ACCOUNTS, COUNTRIES, MFA_TYPES } from '../data/accounts';
+import { CSVLink } from "react-csv";
 
 class AccountsTable extends React.Component {
     state = {
@@ -10,13 +11,16 @@ class AccountsTable extends React.Component {
         searchedColumn: '',
         filteredInfo: {},
         sortedInfo: {},
+        visibleAccountsData: ACCOUNTS,
       };
 
-    handleChange = (pagination, filters, sorter) => {
-    console.log('Various parameters', pagination, filters, sorter);
+    handleChange = (pagination, filters, sorter, extra) => {
+
+    console.log('Various parameters', pagination, filters, sorter, extra);
     this.setState({
         filteredInfo: filters,
         sortedInfo: sorter,
+        visibleAccountsData: extra.currentDataSource
     });
     };
 
@@ -95,24 +99,24 @@ class AccountsTable extends React.Component {
           ) : (
             text
           ),
-      });
-    
-      handleSearch = (selectedKeys, confirm, dataIndex) => {
-        confirm();
-        this.setState({
-          searchText: selectedKeys[0],
-          searchedColumn: dataIndex,
-        });
-      };
-    
-      handleReset = clearFilters => {
-        clearFilters();
-        this.setState({ searchText: '' });
-      };
+    });
+
+    handleSearch = (selectedKeys, confirm, dataIndex) => {
+    confirm();
+    this.setState({
+        searchText: selectedKeys[0],
+        searchedColumn: dataIndex,
+    });
+    };
+
+    handleReset = clearFilters => {
+    clearFilters();
+    this.setState({ searchText: '' });
+    };
 
     render() {
 
-        
+        const { visibleAccountsData } = this.state;
         let { sortedInfo, filteredInfo } = this.state;
         sortedInfo = sortedInfo || {};
         filteredInfo = filteredInfo || {};
@@ -162,7 +166,7 @@ class AccountsTable extends React.Component {
                 title: "Multi-Factor Authentication",
                 dataIndex: "mfa",
                 key: "mfa",
-                filter: MFA_TYPES,
+                filters: MFA_TYPES,
                 filteredValue: filteredInfo.mfa || null,
                 onFilter: (value, record) => record.mfa.indexOf(value) === 0,
             },
@@ -199,7 +203,7 @@ class AccountsTable extends React.Component {
        
         return(
             <div>
-                <h1>Accounts Table</h1>
+                <h1>Ledn User</h1>
 
                 <Space style={{ marginBottom: 16 }}>
                     <Button onClick={this.clearFilters} disabled={!hasFilteredInfo}>
@@ -208,6 +212,14 @@ class AccountsTable extends React.Component {
                     <Button onClick={this.clearAll} disabled={!hasFilteredInfo || !hasSortedInfo}>
                         Clear filters and sorters
                     </Button>
+                    <Button>
+                    <CSVLink data={visibleAccountsData}
+                             filename={"ledn-accounts.csv"}>
+                    Download as CSV
+                    </CSVLink>
+
+                    </Button>
+
                 </Space>
 
                 <Table dataSource={dataSource} columns={columns} rowKey="email"
