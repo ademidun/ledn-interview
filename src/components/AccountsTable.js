@@ -203,7 +203,10 @@ class AccountsTable extends React.Component {
        
         return(
             <div>
-                <h1>Ledn User</h1>
+                <h1>Ledn User Accounts</h1>
+                <img src="https://i.imgur.com/GtOeg9k.jpg" alt="Ledn logo" width="50" />
+
+                <hr/>
 
                 <Space style={{ marginBottom: 16 }}>
                     <Button onClick={this.clearFilters} disabled={!hasFilteredInfo}>
