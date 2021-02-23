@@ -2200,3 +2200,39 @@ export const ACCOUNTS = [
       "ReferredBy": null
     }
   ]
+
+
+export let COUNTRIES = []
+
+/**
+ * We could convert the "null" mfa types to be an actual Javascript null primitive 
+ * object type. But to keep things simiple, we will just refer to the string "null" type.
+ */
+export let MFA_TYPES = []
+
+ACCOUNTS.forEach(account => {
+  
+
+  let found = COUNTRIES.some(country => country.value === account.Country);
+  if(!found) {
+    COUNTRIES.push({
+      text: account.Country,
+      value: account.Country,
+    })
+  }
+  found = MFA_TYPES.some(mfa_type => mfa_type.value === account.mfa);
+  if(!found) {
+    MFA_TYPES.push({
+      text: account.mfa,
+      value: account.mfa,
+    })
+  }
+
+});
+
+COUNTRIES = COUNTRIES.sort((a,b) => a.value.localeCompare(b.value))
+
+// leaving the console.log statements to make it easier for others to understand
+// what is happening in the code.
+// In real production code, this would be removed.
+console.log({COUNTRIES})
